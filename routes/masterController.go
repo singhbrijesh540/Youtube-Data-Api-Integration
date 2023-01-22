@@ -25,6 +25,9 @@ func (c *MasterController) MakeRoutes(engine *gin.Engine) {
 func getVideoDetailAPIRoutes(engine *gin.Engine, basePath string, youtubeService youtubeService.YoutubeDataApiService, videoDetailService master.VideoDetailService) {
 	engine.GET(basePath+"/video-detail", GetVideoDetailHandler(videoDetailService))
 	engine.GET(basePath+"/search/video-detail", SearchVideoDetailHandler(videoDetailService))
+
+	//Optimized Search Api to fetch Video Detail
+	engine.GET(basePath+"/search/v2/video-detail", SearchVideoDetailHandlerV2(videoDetailService))
 }
 
 //Fetch Video Details with Pagination and sorted in Reverse order of their published datetime
@@ -77,6 +80,22 @@ func SearchVideoDetailHandler(service master.VideoDetailService) gin.HandlerFunc
 			Page:        pageInt,
 			Size:        sizeInt,
 		})
+		if apiErr != nil || response == nil {
+			context.JSON(http.StatusNotFound, gin.H{"error": apiErr})
+			return
+		}
+		context.JSON(http.StatusOK, response)
+	}
+}
+
+//Optimized Search Api to fetch Video Detail
+func SearchVideoDetailHandlerV2(service master.VideoDetailService) gin.HandlerFunc {
+	return func(context *gin.Context) {
+		query, ok := context.GetQuery("query")
+		if !ok {
+			query = ""
+		}
+		response, apiErr := service.SearchVideoDetailV2(query)
 		if apiErr != nil || response == nil {
 			context.JSON(http.StatusNotFound, gin.H{"error": apiErr})
 			return

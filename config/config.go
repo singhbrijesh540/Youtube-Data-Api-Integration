@@ -62,7 +62,7 @@ func readDefaultEnvVariables() *EnvironmentVariables {
 	}
 
 	youtubeApiConfig := YoutubeApiConfig{
-		DeveloperKey:   "AIzaSyBsXkmVbOy5lkRJ6kpGlVZRIbcoE03oEhM",
+		DeveloperKey:   "AIzaSyCDRHwv0BQZddPkyl6UkyX6GvjHN5ttpUs",
 		Query:          "Cricket",
 		MaxResults:     10,
 		PublishedAfter: "2023-01-21T03:32:16Z",

@@ -23,6 +23,18 @@ func (vdService videoDetailService) SearchVideoDetail(request SearchVideoDetailR
 	return videoDetail, err
 }
 
+func (vdService videoDetailService) SearchVideoDetailV2(query string) ([]*VideoDetail, error) {
+	videoDetail, err := vdService.videoDetailRepo.SearchVideoDetailV2(query)
+	if err != nil {
+		fmt.Print("[FetchVideoDetail] Error in fetching videos detail data")
+		return nil, err
+	}
+	if videoDetail == nil {
+		return nil, nil
+	}
+	return videoDetail, err
+}
+
 func (vdService videoDetailService) FetchVideoDetail(pageInt int, sizeInt int) ([]*VideoDetail, error) {
 	videosdetail, err := vdService.videoDetailRepo.GetVideosDetail(pageInt, sizeInt)
 	if err != nil {

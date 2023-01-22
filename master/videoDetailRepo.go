@@ -3,6 +3,7 @@ package master
 import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
+	"strings"
 )
 
 type videoDetailDao struct {
@@ -33,6 +34,21 @@ func (vDao videoDetailDao) SearchVideoDetail(title string, description string, p
 			Find(&videoDetail)
 	}
 
+	if tx == nil {
+		return nil, nil
+	}
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
+	return videoDetail, nil
+}
+
+//Optimized Search Query to Fetch Video Detail
+func (vDao videoDetailDao) SearchVideoDetailV2(query string) ([]*VideoDetail, error) {
+	//offset := page * size
+	var videoDetail []*VideoDetail
+	query = strings.ReplaceAll(query, " ", " & ")
+	tx := vDao.db.Raw("select * from video_detail where to_tsvector(title) @@ to_tsquery(?) or to_tsvector(description) @@ to_tsquery(?)", query, query).Scan(&videoDetail)
 	if tx == nil {
 		return nil, nil
 	}
