@@ -29,7 +29,8 @@ Unique (thumbnail_url)
 
 
 
-Now open the cloned project(fampay-assignment) in some IDE(preferably GoLand) and run "main.go" file
+Now open the cloned project(fampay-assignment) in some IDE(preferably GoLand).
+Update dbConfig "fampay-assignment/config/config.go" set USERNAME And PASSWORD of your Local postgres db and run "main.go" file
 
 OR
 
