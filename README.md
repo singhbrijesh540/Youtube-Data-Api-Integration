@@ -3,6 +3,7 @@
 #Local Setup
 
 clone this repository using command below
+
 "git clone https://github.com/singhbrijesh540/fampay-assignment.git"
 
 Run Postgres server in your local
@@ -14,7 +15,7 @@ Create a database in your local postgreys with name: "assignment"
 
 Create a table in the above created "assignment" database using below Query:
 
-CREATE TABLE new_detail (
+CREATE TABLE video_detail (
 id serial4 NOT NULL,
 created_at timestamp NULL DEFAULT now(),
 updated_at timestamp NULL DEFAULT now(),
